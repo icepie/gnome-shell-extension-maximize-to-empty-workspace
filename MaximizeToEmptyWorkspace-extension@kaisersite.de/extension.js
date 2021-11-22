@@ -214,6 +214,7 @@ class Extension {
     
     window_manager_map(act)
     {
+
         const win = act.meta_window;
         //global.log("achim","window_manager_map "+win.get_id());
         if (win.window_type !== Meta.WindowType.NORMAL)
@@ -222,6 +223,7 @@ class Extension {
             return;
         if (win.is_always_on_all_workspaces())
             return;
+            
         this.placeOnWorkspace(win);
     }
     
@@ -307,7 +309,14 @@ class Extension {
         const win = act.meta_window;
         //global.log("achim","window_manager_size_changed "+win.get_id());
         if (win.get_id() in _windowids_size_change) {
-            if (_windowids_size_change[win.get_id()]=="place") {                
+            if (_windowids_size_change[win.get_id()]=="place") { 
+                
+                if (win.get_title()=="Media viewer")
+                {
+                    global.log("achim","fix telegram desktop Media viewer");
+                    return;
+                }
+     
                 this.placeOnWorkspace(win);
             } else if (_windowids_size_change[win.get_id()]=="back") {                
                 this.backto(win);
